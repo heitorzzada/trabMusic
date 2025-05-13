@@ -20,6 +20,5 @@ class Album(BaseModel):
 class Musica(BaseModel):
     titulo = CharField()
     artista = CharField()
-    duracao = IntegerField()
     genero = ForeignKeyField(Genero, backref='musicas')
     album = ForeignKeyField(Album, backref='musicas')
