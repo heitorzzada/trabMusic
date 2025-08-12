@@ -22,3 +22,10 @@ class Musica(BaseModel):
     artista = CharField()
     genero = ForeignKeyField(Genero, backref='musicas')
     album = ForeignKeyField(Album, backref='musicas')
+
+
+# Depois de criar as classes, conecta no banco de dados
+db.connect()
+
+# Cria as tabelas para as classes, caso não existam
+db.create_tables([Genero, Album, Musica])
