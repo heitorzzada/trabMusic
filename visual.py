@@ -18,10 +18,18 @@ def salvar():
 
             Album.create(nome=nome, ano=ano)
             messagebox.showinfo("Sucesso", f"Álbum '{nome}' salvo com sucesso!") 
-     
+            limpar()
+            carregar_albuns()  
     else:
         messagebox.showerror("Atenção", "Informe o nome do álbum")
 
+    def limpar():
+        a_entry.delete(0, tk.END)
+        ano_entry.delete(0, tk.END)
+    def carregar_albuns():
+        lista_albuns.delete(0, tk.END) 
+        for album in Album.select():
+            lista_albuns.insert(tk.END, f"{album.id} - {album.nome} ({album.ano})")
 
 FONTE_PADRAO = ("Arial", 12)
 FONTE_NEGRITO = ("Arial", 20, "bold")
@@ -46,10 +54,17 @@ ano_entry = tk.Entry(janela, width=30)
 ano_entry.grid(row=3, column=1, sticky="w", padx=(2,10), pady=5)
 
 
-botao_salvar = tk.Button(janela, text="Salvar", font=FONTE_PADRAO, command=salvar)
+botao_salvar = tk.Button(janela, text="SALVAR", font=FONTE_PADRAO, command=salvar)
 botao_salvar.grid(row=4, column=0, columnspan=2, pady=20)
 
 botao_del = tk.Button(janela, text="LIMPAR", font=FONTE_PADRAO)
 botao_del.grid(row=4, column=2, columnspan=2, pady=20)
 
+lista_label = tk.Label(janela, text="Álbuns cadastrados:", font=FONTE_PADRAO)
+lista_label.grid(row=5, column=0, columnspan=3, pady=(10,5))
+
+lista_albuns = tk.Listbox(janela, width=50, height=10)
+lista_albuns.grid(row=6, column=0, columnspan=3, padx=10, pady=5)
+
+carregar_albuns() 
 janela.mainloop()
